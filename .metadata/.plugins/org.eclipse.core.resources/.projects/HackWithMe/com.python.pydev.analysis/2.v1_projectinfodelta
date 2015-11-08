@@ -1,0 +1,19 @@
+INSTUPmain
+C:\Users\Robert Wild\Desktop\HackWithMeWeb\HackWithMe\main.py
+INFOS:&&3|1|2|0&&3|3|2|0&&2|4|2|0&&2|5|2|0&&2|6|2|0&&2|7|2|0&&2|8|2|0&&2|9|2|0&&2|10|2|0&&2|11|2|0&&2|12|2|0&&2|13|2|0&&2|14|2|0&&2|15|2|0&&2|16|2|0
+WriteSimilaritiesToFile=7
+Similarity=8
+main=2
+ReadSimilaritiesFromFile=6
+Difference=9
+SetMissingSimilarities=12
+SIMILARITIES=1
+ReadOldInterestsFromFile=4
+QUERIED_INTERISTS=3
+PopulateGroups=15
+PickGroupHeads=14
+SetSimilarity=10
+Synonymous=11
+GetInterests=13
+Main=16
+WriteOldInterestsToFile=5

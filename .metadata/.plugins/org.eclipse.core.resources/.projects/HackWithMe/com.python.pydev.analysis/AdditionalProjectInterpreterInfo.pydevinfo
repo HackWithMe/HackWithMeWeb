@@ -1,0 +1,34 @@
+-- VERSION_4
+-- START DISKCACHE
+C:\Users\Robert Wild\Desktop\HackWithMeWeb\.metadata\.plugins\org.eclipse.core.resources\.projects\HackWithMe\com.python.pydev.analysis\v2_indexcache
+app.__init__|1446982630269|C:\Users\Robert Wild\Desktop\HackWithMeWeb\HackWithMe\app\__init__.py
+main|1446963329971|C:\Users\Robert Wild\Desktop\HackWithMeWeb\HackWithMe\main.py
+run|1446968043792|C:\Users\Robert Wild\Desktop\HackWithMeWeb\HackWithMe\run.py
+app.views|1446982794659|C:\Users\Robert Wild\Desktop\HackWithMeWeb\HackWithMe\app\views.py
+-- END DISKCACHE
+-- START DICTIONARY
+3
+1=main
+3=app.__init__
+2=app.views
+-- END DICTIONARY
+-- START TREE 1
+14
+dif|1|Difference!10@
+get|1|GetInterests!10@
+hom|1|home!18@
+ind|1|index!18@
+mai|1|Main!10@
+pic|1|PickGroupHeads!10@
+pop|1|PopulateGroups!10@
+que|1|QUERIED_INTERISTS!11@
+rea|2|ReadSimilaritiesFromFile!10@ReadOldInterestsFromFile!10@
+set|2|SetSimilarity!10@SetMissingSimilarities!10@
+sim|2|SIMILARITIES!11@Similarity!10@
+syn|1|Synonymous!10@
+the|1|theapp!27@
+wri|2|WriteOldInterestsToFile!10@WriteSimilaritiesToFile!10@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Find A Team</title>
+
+		<link rel="stylesheet" type="text/css" href= Main2.css>
+		<link rel="stylesheet" type="text/css" href= Animate.css>
+        
+        
+       <!--Responsive Columns (1-12) Thank you to: http://www.responsivegridsystem.com/-->
+        <link rel="stylesheet" href="ResponsiveGrid.css">
+
+</head>
+
+<body>
+	
+    <div class="full">
+    
+    
+    
+    <h1>You are paired with the iOS Group!</h1>
+    <h4>Meeting Location: At big "Y"</h4>
+    
+    
+    
+    <div id="formWrapper">
+          
+     <!--     
+     <?php
+      if($_POST['formSubmit'] == "Submit") 
+      {
+        $varMovie = $_POST['formEmail'];
+        $varMovie = $_POST['formInterests'];      }
+    	?>     
+      -->
+      
+      
+     
+
+      
+      
+      </div>
+      </div>
+      
+      
+      
+    <!--
+    <form action="data2.txt" method="POST">
+    <input name="field1" type="text" />
+    <input name="field2" type="text" />
+    <input type="submit" name="submit" value="Save Data">
+	</form>
+    
+    
+    <?php
+if(isset($_POST['field1']) && isset($_POST['field2'])) {
+    $data = $_POST['field1'] . '-' . $_POST['field2'] . "\n";
+    $ret = file_put_contents('mydata.txt', $data, FILE_APPEND | LOCK_EX);
+    if($ret === false) {
+        die('There was an error writing this file');
+    }
+    else {
+        echo "$ret bytes written to file";
+    }
+	}
+else {
+   die('no post data to process');
+	}
+    -->
+    
+</body>
+</html>

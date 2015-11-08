@@ -107,7 +107,7 @@ def SetMissingSimilarities(interests):
         if not interests[i] in QUERIED_INTERISTS:
             # We don't have this similarity value
             
-            print "add query " + interests[i]
+            print "relations query " + interests[i]
             QUERIED_INTERISTS.append(interests[i])
                 
                 

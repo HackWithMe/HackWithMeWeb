@@ -31,6 +31,7 @@ n = input('Number of groups: ')
 SetInterests(interests)
 groups = MakeGroups(n)
 
+print
 for i in range(len(groups)):
         print "GROUP " + str(i) + ": "
         for interest in groups[i]:

@@ -1,0 +1,12 @@
+
+peoplefile = open("DemoPeopleInterests.txt", 'r')
+personfile = open("DemoPersonInterests.txt", 'r')
+    
+s = file_in.read()
+s = s.split(',')
+
+for i in range(len(s)):
+    if s[i].strip() == '': continue
+    QUERIED_INTERISTS.append(s[i])
+
+file_in.close()

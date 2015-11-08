@@ -1,0 +1,287 @@
+import random
+from lxml import html
+import requests
+from macpath import split
+import sys
+from sets import Set
+
+
+# GLOBALS
+
+SIMILARITIES = { }
+QUERIED_INTERISTS = []
+
+
+def ReadOldInterestsFromFile():
+    global QUERIED_INTERISTS 
+    file_in = open("QueriedInterests.txt", 'r')
+    
+    s = file_in.read()
+    s = s.split(',')
+    
+    for i in range(len(s)):
+        if s[i].strip() == '': continue
+        QUERIED_INTERISTS.append(s[i])
+    
+    file_in.close()
+    
+    
+def WriteOldInterestsToFile():
+    file_out = open("QueriedInterests.txt", 'w')
+    
+    for interest in QUERIED_INTERISTS:
+        file_out.write(interest + ",")
+    
+    file_out.close()
+
+def ReadSimilaritiesFromFile():
+    global SIMILARITIES
+    file_in = open("Similarities.txt", 'r')
+
+    s = file_in.read()
+    s = s.split(',')
+    
+    for i in range(len(s)/3):
+        SetSimilarity(s[3*i], s[3*i+1], float(s[3*i+2]))
+
+    file_in.close()
+
+def WriteSimilaritiesToFile():
+    file_out = open("Similarities.txt", 'w')
+    
+    for key in SIMILARITIES.keys():
+        file_out.write(key[0] + ",")
+        file_out.write(key[1] + ",")
+        file_out.write(str(SIMILARITIES[key]) + ",")
+
+    file_out.close()
+
+
+def Similarity(interest1, interest2):
+    #print "sim: ", interest1, interest2,
+    
+    if interest1 < interest2 and (interest1, interest2) in SIMILARITIES:
+        #print str(SIMILARITIES[(interest1, interest2)])
+        return SIMILARITIES[(interest1, interest2)]
+    elif interest2 < interest1 and (interest2, interest1) in SIMILARITIES:
+        #print str(SIMILARITIES[(interest2, interest1)])
+        return SIMILARITIES[(interest2, interest1)]
+    else:
+        #print 0
+        return 0
+
+def Difference(interest1, interest2):
+    return 1.0 - Similarity(interest1, interest2)
+
+def SetSimilarity(interest1, interest2, value):
+    if interest1 <= interest2:
+        SIMILARITIES[(interest1, interest2)] = value
+    else:
+        SIMILARITIES[(interest2, interest1)] = value
+
+
+def Synonymous(interest1, interest2):
+    
+    page = requests.get('http://www.freebase.com/search?query=' + interest1 + '&lang=en&any=%2Fcommon%2Ftopic&scoring=entity&prefixed=true')
+    #tree = html.fromstring(page.content)
+    #top_result1 = tree.xpath('//h3[@class="result-item-title"]/text()')
+    #print top_result1
+    i = page.content.find('result-item-title')
+    top_reusult1 = page.content[i+30:i+100].replace('<','|').replace('>','|').split('|')[1]
+    
+    page = requests.get('http://www.freebase.com/search?query=' + interest2 + '&lang=en&any=%2Fcommon%2Ftopic&scoring=entity&prefixed=true')
+    i = page.content.find('result-item-title')
+    top_reusult2 = page.content[i+30:i+100].replace('<','|').replace('>','|').split('|')[1]
+    
+    #print interest1 + ", " + interest2 + ", " + str(top_reusult1 == top_reusult2)
+    return top_reusult1 == top_reusult2
+    #return False
+    
+
+def SetMissingSimilarities(interests):
+    global SIMILARITIES
+    
+    for i in range(len(interests)):
+        if not interests[i] in QUERIED_INTERISTS:
+            # We don't have this similarity value
+            
+            print "add query " + interests[i]
+            QUERIED_INTERISTS.append(interests[i])
+                
+                
+            page = requests.get('https://api.stackexchange.com/2.2/tags/' + interests[i] + '/info?order=desc&sort=popular&site=stackoverflow')
+            page_split = page.content.split(',')
+    
+            # continue if tag not found on stack exchange
+            if page_split[0] == '{"error_id":502':
+                print 'ERROR: too many requests from this ip'
+                sys.exit()
+            if page_split[0] == '{"items":[]':
+                continue 
+
+            # find stack exchange count for this tag
+            main_count = page_split[3].split(':')[1]
+
+            # find related tags and counts    
+            page = requests.get('https://api.stackexchange.com/2.2/tags/' + interests[i] + '/related?site=stackoverflow')
+            page_split = page.content.split(',')
+            
+            for k in range(len(page_split)/5):
+                s = page_split[(k+1) * 5 - 1].split(':')
+                name = s[1]
+                name = name[1:len(name)-2]
+                
+                count = page_split[(k+1) * 5 - 2].split(':')[1]
+                
+                # find similarity value
+                value = float(count) / float(main_count)
+                SetSimilarity(interests[i], name, value)
+                #print interests[i], name, value
+                
+                
+            
+    """
+    for i in range(len(interests)):
+        for j in range(i, len(interests)):
+            sim_value = 0
+            if Synonymous(interests[i], interests[j]): sim_value = 1
+            else: sim_value = float(count) / float(main_count)
+    """
+
+def SetInterests():
+def GetInterests():
+    interests = []
+    
+    #page = requests.get('...')
+    #interests = page.split(',')
+    
+    interests.append("virtual reality")
+    interests.append("vr")
+    interests.append("the internet of things")
+    interests.append("Buzzwords")
+    interests.append("c")
+    interests.append("internet of things")
+    interests.append("oculus")
+    interests.append("java")
+    interests.append("front end")
+    interests.append("ui")
+    interests.append("unity")
+    interests.append("unity engine")
+    interests.append("unreal")
+    interests.append("design")
+    interests.append("art")
+    interests.append("backend")
+    interests.append("android")
+    
+    set = Set([])
+    
+    for interest in interests:
+        set.add(interest)
+    
+    interests = []
+    for s in set:
+        interests.append(s)
+    
+    
+    return interests
+
+def PickGroupHeads(interests, num_groups=5):
+    num_groups = min(num_groups, len(interests))
+    heads = []
+    # add first head
+    heads.append(interests[0])
+    interests.remove(interests[0])
+    
+    for i in range(1, num_groups):
+        greatest_diff = 0
+        new_head_j = 0;
+        for j in range(len(interests)):
+            diff = 0
+            
+            for k in range(len(heads)):
+                diff += Difference(interests[j], heads[k])
+            
+            if diff >= greatest_diff:
+                greatest_diff = diff
+                new_head_j = j
+                
+        
+        heads.append(interests[new_head_j])
+        interests.remove(interests[new_head_j])
+        
+    return heads
+        
+
+def PopulateGroups(interests, heads):
+    groups = []
+    for head in heads:
+        groups.append([head])
+        
+    for i in range(len(interests)):
+        greatest_sim = 0
+        best_group_i = 0
+        
+        offset = random.random() * len(groups)
+        for j in range(len(groups)):
+            k = int((j + offset) % len(groups))
+            sim = 0
+            for c in range(len(groups[k])):
+                sim = max(sim, Similarity(interests[i], groups[k][c]))
+            if sim >= greatest_sim:
+                greatest_sim = sim
+                best_group_i = k
+    
+        groups[best_group_i].append(interests[i])
+        
+    return groups
+
+
+def MakeGroups(n):
+    
+    ReadOldInterestsFromFile()
+    ReadSimilaritiesFromFile()
+    #print "Loaded similarities: ",
+    #print SIMILARITIES
+    
+    # Get from website
+    interests = GetInterests()
+   # print "Got interests from website: ",
+    #print interests
+    
+    # Process
+    SetMissingSimilarities(interests)
+    #print "Missing similarities added: ",
+    #print SIMILARITIES
+    
+    #
+    heads = PickGroupHeads(interests, 6)
+    groups = PopulateGroups(interests, heads)
+    
+    #print "Groups picked: ",
+    #print groups
+
+    # write to data file
+    WriteSimilaritiesToFile()
+    WriteOldInterestsToFile()
+    #print "Wrote similarities to file"
+    #print "Done"
+    
+    return groups
+
+
+# TEST
+
+
+
+
+
+groups = MakeGroups(5)
+for i in range(len(groups)):
+        print "GROUP " + str(i) + ": "
+        for interest in groups[i]:
+            print "    " + interest
+            
+        print
+        
+        
+        

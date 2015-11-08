@@ -11,6 +11,8 @@ from sets import Set
 SIMILARITIES = { }
 QUERIED_INTERISTS = []
 
+interests = []
+
 
 def ReadOldInterestsFromFile():
     global QUERIED_INTERISTS 
@@ -148,37 +150,14 @@ def SetMissingSimilarities(interests):
             else: sim_value = float(count) / float(main_count)
     """
 
-
-def GetInterests():
-    interests = []
-    
-    #page = requests.get('...')
-    #interests = page.split(',')
-    
-    interests.append("virtual reality")
-    interests.append("vr")
-    interests.append("the internet of things")
-    interests.append("Buzzwords")
-    interests.append("c")
-    interests.append("internet of things")
-    interests.append("oculus")
-    interests.append("java")
-    interests.append("front end")
-    interests.append("ui")
-    interests.append("unity")
-    interests.append("unity engine")
-    interests.append("unreal")
-    interests.append("design")
-    interests.append("art")
-    interests.append("backend")
-    interests.append("android")
+def SetInterests(input_interests):
+    global interests
     
     set = Set([])
     
-    for interest in interests:
+    for interest in input_interests:
         set.add(interest)
     
-    interests = []
     for s in set:
         interests.append(s)
     
@@ -244,7 +223,7 @@ def MakeGroups(n):
     #print SIMILARITIES
     
     # Get from website
-    interests = GetInterests()
+    #interests = GetInterests()
    # print "Got interests from website: ",
     #print interests
     
@@ -254,7 +233,7 @@ def MakeGroups(n):
     #print SIMILARITIES
     
     #
-    heads = PickGroupHeads(interests, 6)
+    heads = PickGroupHeads(interests, n)
     groups = PopulateGroups(interests, heads)
     
     #print "Groups picked: ",
@@ -268,3 +247,7 @@ def MakeGroups(n):
     
     return groups
 
+
+        
+        
+        

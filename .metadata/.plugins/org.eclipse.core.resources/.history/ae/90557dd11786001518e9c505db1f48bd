@@ -1,0 +1,12 @@
+
+peoplefile = open("DemoPeopleInterests.txt", 'r')
+personfile = open("DemoPersonInterests.txt", 'r')
+    
+s = peoplefile.read()
+s = s.split(',')
+
+for i in range(len(s)):
+    if s[i].strip() == '': continue
+    
+
+file_in.close()

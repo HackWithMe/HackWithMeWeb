@@ -1,0 +1,20 @@
+
+peoplefile = open("DemoPeopleInterests.txt", 'r')
+personfile = open("DemoPersonInterests.txt", 'r')
+    
+s = peoplefile.read()
+s = s.split(',')
+
+
+interests = []
+
+for i in range(len(s)):
+    if s[i].strip() == '': continue
+    interests.append(s[i])
+
+for i in range(len(s)):
+    if s[i].strip() == '': continue
+    interests.append(s[i])
+
+
+file_in.close()

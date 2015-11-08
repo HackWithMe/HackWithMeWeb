@@ -1,0 +1,21 @@
+#!flask/bin/python
+
+from app import Groups, theapp
+from flask import *
+
+OnMakeGroups()
+theapp.run(debug=True)
+
+from main import MakeGroups
+
+
+def OnMakeGroups():
+    app.Groups = MakeGroups(5)
+    
+    for i in range(len(app.Groups)):
+        print "GROUP " + str(i) + ": "
+        for interest in app.Groups[i]:
+            print "    " + interest
+            
+        print
+

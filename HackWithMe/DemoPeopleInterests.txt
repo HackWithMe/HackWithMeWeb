@@ -1,1 +1,1 @@
-virtual reality,vr,the internet of things,Buzzwords
+virtual reality,vr,the internet of things,c,design,ios,ui,android,hardware,kinect

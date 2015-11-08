@@ -13,7 +13,7 @@ s = s.split(',')
 
 for i in range(len(s)):
     if s[i].strip() == '': continue
-    interests.append(s[i].lower())
+    interests.append(s[i])
 
 s = personfile.read()
 s = s.split(',')

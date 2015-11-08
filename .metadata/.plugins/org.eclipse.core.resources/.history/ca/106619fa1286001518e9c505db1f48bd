@@ -1,0 +1,17 @@
+#!flask/bin/python
+
+from app import *
+from flask import *
+theapp.run(debug=True)
+
+from main import Main
+
+
+def OnMakeGroups():
+    app.Groups = Main()
+    
+    
+
+OnMakeGroups()
+for i in range(len(app.Groups)):
+print "GROUP " + i + ":"

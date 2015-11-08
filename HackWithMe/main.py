@@ -29,8 +29,6 @@ def ReadOldInterestsFromFile():
 def WriteOldInterestsToFile():
     file_out = open("QueriedInterests.txt", 'w')
     
-    print QUERIED_INTERISTS
-    
     for interest in QUERIED_INTERISTS:
         file_out.write(interest + ",")
     
@@ -95,18 +93,15 @@ def Synonymous(interest1, interest2):
     i = page.content.find('result-item-title')
     top_reusult2 = page.content[i+30:i+100].replace('<','|').replace('>','|').split('|')[1]
     
-    print interest1 + ", " + interest2 + ", " + str(top_reusult1 == top_reusult2)
+    #print interest1 + ", " + interest2 + ", " + str(top_reusult1 == top_reusult2)
     return top_reusult1 == top_reusult2
-    return False
+    #return False
     
 
 def SetMissingSimilarities(interests):
     global SIMILARITIES
     
-    print QUERIED_INTERISTS
-    
     for i in range(len(interests)):
-        print "interest: " + interests[i]
         if not interests[i] in QUERIED_INTERISTS:
             # We don't have this similarity value
             
@@ -241,42 +236,35 @@ def PopulateGroups(interests, heads):
     return groups
 
 
-def Main():
+def MakeGroups(n):
     
     ReadOldInterestsFromFile()
     ReadSimilaritiesFromFile()
-    print "Loaded similarities: ",
-    print SIMILARITIES
+    #print "Loaded similarities: ",
+    #print SIMILARITIES
     
     # Get from website
     interests = GetInterests()
-    print "Got interests from website: ",
-    print interests
-    
-    
-    
+   # print "Got interests from website: ",
+    #print interests
     
     # Process
     SetMissingSimilarities(interests)
-    print "Missing similarities added: ",
-    print SIMILARITIES
+    #print "Missing similarities added: ",
+    #print SIMILARITIES
     
     #
     heads = PickGroupHeads(interests, 6)
     groups = PopulateGroups(interests, heads)
     
-    print "Groups picked: ",
-    print groups
-    
-    # Send back to website
-    
+    #print "Groups picked: ",
+    #print groups
 
     # write to data file
     WriteSimilaritiesToFile()
     WriteOldInterestsToFile()
-    print "Wrote similarities to file"
-    print "Done"
+    #print "Wrote similarities to file"
+    #print "Done"
+    
+    return groups
 
-
-# Entry
-Main()

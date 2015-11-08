@@ -1,0 +1,12 @@
+from app import theapp
+from flask.templating import render_template
+
+@theapp.route('/')
+@theapp.route('/index')
+def index():
+    return render_template('index.html')
+
+@theapp.route('/home')
+def home():
+    return render_template('home.html',
+                           title='Home')
